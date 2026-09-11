@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sucrédito · Resolvé el súper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --yellow: #FFEE00;
+    --yellow-deep: #E8D800;
+    --red: #E30613;
+    --red-deep: #B4040E;
+    --ink: #1B1A1E;
+    --ink-soft: #4A4850;
+    --paper: #FFFDF6;
+    --line: rgba(27,26,30,0.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Archivo Black', 'Inter', sans-serif;
+    font-weight:400;
+    letter-spacing:-0.01em;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background: var(--paper);
+    position:relative;
+  }
+  .hero-banner{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+
+  /* ---------- LOCATION SELECTOR ---------- */
+  .selector-wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding: 34px 24px 8px;
+  }
+  .selector-label{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+    font-weight:700;
+    margin-bottom:14px;
+  }
+  .prov-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .prov-tab{
+    appearance:none;
+    border:2px solid var(--ink);
+    background:var(--paper);
+    color:var(--ink);
+    padding:12px 20px;
+    border-radius:12px;
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    cursor:pointer;
+    transition: transform .12s ease, background .12s ease, color .12s ease;
+  }
+  .prov-tab:hover{ transform:translateY(-2px); }
+  .prov-tab.active{
+    background:var(--yellow);
+    border-color:var(--yellow);
+    color:var(--ink);
+  }
+  .prov-tab .count{
+    font-weight:500;
+    opacity:0.7;
+    font-size:13px;
+    margin-left:6px;
+  }
+
+  /* ---------- RESULTS ---------- */
+  main{
+    max-width:1080px;
+    margin:0 auto;
+    padding: 26px 24px 90px;
+  }
+  .province-heading{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin: 18px 0 6px;
+  }
+  .province-heading h2{
+    font-size:clamp(1.6rem,4vw,2.3rem);
+    margin:0;
+  }
+  .province-heading .sub{
+    color:var(--ink-soft);
+    font-size:15px;
+  }
+
+  .promo-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap:18px;
+    margin-top:26px;
+  }
+  .promo-card{
+    border:1px solid var(--line);
+    border-radius:16px;
+    background:#fff;
+    padding:26px 22px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    position:relative;
+    overflow:hidden;
+  }
+  .promo-card::before{
+    content:"";
+    position:absolute;
+    left:0; top:0;
+    width:6px; height:100%;
+    background:var(--yellow);
+  }
+  .cuotas-flag{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    align-self:flex-start;
+    background:var(--yellow);
+    color:var(--ink);
+    padding:10px 16px 10px 14px;
+    border-radius:0 10px 10px 0;
+    margin-left:-22px;
+  }
+  .cuotas-flag .num{
+    font-family:'Archivo Black',sans-serif;
+    font-size:1.6rem;
+    line-height:1;
+  }
+  .cuotas-flag .txt{
+    font-size:12.5px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+    max-width:80px;
+    line-height:1.15;
+  }
+  .store-row{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:28px;
+  }
+  .store-row img{
+    max-height:52px;
+    max-width:150px;
+    object-fit:contain;
+  }
+
+  footer{
+    background:var(--ink);
+    color:rgba(255,255,255,0.7);
+    padding:28px 24px;
+    font-size:12.5px;
+    line-height:1.6;
+    text-align:center;
+  }
+  footer strong{color:#fff;}
+
+  @media (max-width:600px){
+    .promo-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img src="hero_super_banner.jpg" alt="Resolvé el súper en cuotas sin interés" class="hero-banner">
+
+  <div class="selector-wrap">
+    <div class="selector-label">Elegí tu localidad</div>
+    <div class="prov-tabs" id="provTabs"></div>
+  </div>
+</header>
+
+<main>
+  <div class="province-heading">
+    <h2 id="provTitle">—</h2>
+    <span class="sub" id="provSub"></span>
+  </div>
+  <div class="promo-grid" id="promoGrid"></div>
+</main>
+
+<footer>
+  Tarjeta Sucrédito propiedad de Valle Fértil S.A, Cuit 30-68570941-0 — San Martín 836, San Miguel de Tucumán.<br>
+  *CFT (Costo Financiero Total) 0,0% — TNA (Tasa Nominal Anual) 0,0%. Promociones válidas durante septiembre en supermercados adheridos.
+</footer>
+
+<script>
+const LOGOS = {
+  changomas:  "tuc_changomas.png",
+  anonima:    "tuc_anonima.png",
+  carrefour:  "tuc_carrefour.png",
+  gomezpardo: "tuc_gomezpardo.png",
+  sanramon:   "tuc_sanramon.png",
+  yaguar:     "jujuy_yaguar.png",
+  churo:      "sanp_churo.png",
+  obrero:     "sanp_obrero.png"
+};
+
+const DATA = {
+  CONC: {
+    name: "Concepción",
+    groups: [
+      { cuotas: "4", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.changomas, alt: "ChangoMas" }
+      ]},
+      { cuotas: "3", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.gomezpardo, alt: "Gómez Pardo" }
+      ]}
+    ]
+  },
+  TUC: {
+    name: "Tucumán",
+    groups: [
+      { cuotas: "4", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.anonima, alt: "La Anónima" },
+        { logo: LOGOS.changomas, alt: "ChangoMas" },
+        { logo: LOGOS.carrefour, alt: "Carrefour" }
+      ]},
+      { cuotas: "3", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.gomezpardo, alt: "Gómez Pardo" },
+        { logo: LOGOS.sanramon, alt: "San Ramón" }
+      ]}
+    ]
+  },
+  JUJ: {
+    name: "Jujuy",
+    groups: [
+      { cuotas: "4", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.carrefour, alt: "Carrefour" },
+        { logo: LOGOS.yaguar, alt: "Mayorista Yaguar" },
+        { logo: LOGOS.changomas, alt: "ChangoMas" }
+      ]}
+    ]
+  },
+  SANP: {
+    name: "San Pedro de Jujuy",
+    groups: [
+      { cuotas: "4", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.churo, alt: "Supermercados El Churo" }
+      ]},
+      { cuotas: "3", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.obrero, alt: "Supermercado El Obrero" }
+      ]}
+    ]
+  },
+  SGO: {
+    name: "Santiago del Estero",
+    groups: [
+      { cuotas: "4", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.anonima, alt: "La Anónima" },
+        { logo: LOGOS.changomas, alt: "ChangoMas" },
+        { logo: LOGOS.carrefour, alt: "Carrefour" }
+      ]}
+    ]
+  },
+  SAL: {
+    name: "Salta",
+    groups: [
+      { cuotas: "4", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.anonima, alt: "La Anónima" },
+        { logo: LOGOS.changomas, alt: "ChangoMas" },
+        { logo: LOGOS.carrefour, alt: "Carrefour" }
+      ]}
+    ]
+  },
+  ORAN: {
+    name: "Orán",
+    groups: [
+      { cuotas: "4", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.anonima, alt: "La Anónima" },
+        { logo: LOGOS.changomas, alt: "ChangoMas" }
+      ]}
+    ]
+  },
+  COR: {
+    name: "Córdoba",
+    groups: [
+      { cuotas: "4", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.anonima, alt: "La Anónima" },
+        { logo: LOGOS.changomas, alt: "ChangoMas" },
+        { logo: LOGOS.carrefour, alt: "Carrefour" }
+      ]}
+    ]
+  }
+};
+
+const tabsEl = document.getElementById('provTabs');
+const gridEl = document.getElementById('promoGrid');
+const titleEl = document.getElementById('provTitle');
+const subEl = document.getElementById('provSub');
+
+function render(key){
+  const loc = DATA[key];
+  const totalStores = loc.groups.reduce((sum, g) => sum + g.stores.length, 0);
+
+  titleEl.textContent = loc.name;
+  subEl.textContent = totalStores + (totalStores === 1 ? " supermercado adherido" : " supermercados adheridos");
+
+  gridEl.innerHTML = '';
+  loc.groups.forEach(g => {
+    const card = document.createElement('div');
+    card.className = 'promo-card';
+    const storesHtml = g.stores.map(s => `<img src="${s.logo}" alt="${s.alt}">`).join('');
+    card.innerHTML = `
+      <span class="cuotas-flag"><span class="num">${g.cuotas}</span><span class="txt">${g.label}</span></span>
+      <div class="store-row">${storesHtml}</div>
+    `;
+    gridEl.appendChild(card);
+  });
+
+  document.querySelectorAll('.prov-tab').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.key === key);
+  });
+
+  history.replaceState(null, '', '#' + key.toLowerCase());
+}
+
+Object.keys(DATA).forEach(key => {
+  const btn = document.createElement('button');
+  btn.className = 'prov-tab';
+  btn.dataset.key = key;
+  const count = DATA[key].groups.reduce((sum, g) => sum + g.stores.length, 0);
+  btn.innerHTML = DATA[key].name + ` <span class="count">${count}</span>`;
+  btn.addEventListener('click', () => render(key));
+  tabsEl.appendChild(btn);
+});
+
+const hashKey = location.hash.replace('#','').toUpperCase();
+render(DATA[hashKey] ? hashKey : 'CONC');
+</script>
+
+</body>
+</html>
