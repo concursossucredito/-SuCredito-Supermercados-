@@ -39,14 +39,16 @@
   .hero-banner{
     display:block;
     width:100%;
-    height: auto;
-    max-height: 380px;
+    height: 460px;
     object-fit: contain;
-    object-position: center top;
+    object-position: center;
     background: #FFEE00;
   }
+  @media (max-width:900px){
+    .hero-banner{ height: 320px; }
+  }
   @media (max-width:600px){
-    .hero-banner{ max-height: 240px; }
+    .hero-banner{ height: 220px; }
   }
 
   /* ---------- LOCATION SELECTOR ---------- */
@@ -166,14 +168,25 @@
     display:flex;
     flex-wrap:wrap;
     align-items:center;
-    gap:18px;
+    gap:12px;
   }
-  .store-row img{
-    max-height: 64px;
-    max-width: 170px;
+  .store-logo{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px 14px;
+    height:64px;
+  }
+  .store-logo img{
+    max-height: 42px;
+    max-width: 140px;
     height: auto;
     width: auto;
     object-fit: contain;
+    display:block;
   }
 
   footer{
@@ -361,7 +374,7 @@ function render(key){
   loc.groups.forEach(g => {
     const card = document.createElement('div');
     card.className = 'promo-card';
-    const storesHtml = g.stores.map(s => `<img src="${s.logo}" alt="${s.alt}">`).join('');
+    const storesHtml = g.stores.map(s => `<span class="store-logo"><img src="${s.logo}" alt="${s.alt}"></span>`).join('');
     card.innerHTML = `
       <span class="cuotas-flag">
         <span class="num">${g.cuotas}</span>
