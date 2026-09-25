@@ -31,7 +31,7 @@
     letter-spacing:-0.01em;
   }
 
-  /* ---------- HERO ---------- */
+  /* ---------- HERO (más chico) ---------- */
   .hero{
     background: var(--paper);
     position:relative;
@@ -39,14 +39,19 @@
   .hero-banner{
     display:block;
     width:100%;
-    height:auto;
+    max-height: 280px;          /* ← más chico */
+    object-fit: cover;
+    object-position: center top;
+  }
+  @media (max-width:600px){
+    .hero-banner{ max-height: 200px; }
   }
 
   /* ---------- LOCATION SELECTOR ---------- */
   .selector-wrap{
     max-width:1080px;
     margin:0 auto;
-    padding: 34px 24px 8px;
+    padding: 28px 24px 8px;
   }
   .selector-label{
     font-size:13px;
@@ -66,11 +71,11 @@
     border:2px solid var(--ink);
     background:var(--paper);
     color:var(--ink);
-    padding:12px 20px;
+    padding:11px 18px;
     border-radius:12px;
     font-family:'Inter',sans-serif;
     font-weight:700;
-    font-size:15px;
+    font-size:14.5px;
     cursor:pointer;
     transition: transform .12s ease, background .12s ease, color .12s ease;
   }
@@ -83,7 +88,7 @@
   .prov-tab .count{
     font-weight:500;
     opacity:0.7;
-    font-size:13px;
+    font-size:12.5px;
     margin-left:6px;
   }
 
@@ -91,37 +96,36 @@
   main{
     max-width:1080px;
     margin:0 auto;
-    padding: 26px 24px 90px;
+    padding: 22px 24px 90px;
   }
   .province-heading{
     display:flex;
     align-items:baseline;
     gap:14px;
-    margin: 18px 0 6px;
+    margin: 14px 0 4px;
   }
   .province-heading h2{
-    font-size:clamp(1.6rem,4vw,2.3rem);
+    font-size:clamp(1.55rem,4vw,2.15rem);
     margin:0;
   }
   .province-heading .sub{
     color:var(--ink-soft);
-    font-size:15px;
+    font-size:14.5px;
   }
-
   .promo-grid{
     display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-    gap:18px;
-    margin-top:26px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap:16px;
+    margin-top:22px;
   }
   .promo-card{
     border:1px solid var(--line);
     border-radius:16px;
     background:#fff;
-    padding:26px 22px;
+    padding:22px 20px;
     display:flex;
     flex-direction:column;
-    gap:18px;
+    gap:16px;
     position:relative;
     overflow:hidden;
   }
@@ -139,39 +143,39 @@
     align-self:flex-start;
     background:var(--yellow);
     color:var(--ink);
-    padding:10px 16px 10px 14px;
+    padding:9px 15px 9px 13px;
     border-radius:0 10px 10px 0;
-    margin-left:-22px;
+    margin-left:-20px;
   }
   .cuotas-flag .num{
     font-family:'Archivo Black',sans-serif;
-    font-size:1.6rem;
+    font-size:1.5rem;
     line-height:1;
   }
   .cuotas-flag .txt{
-    font-size:12.5px;
+    font-size:12px;
     font-weight:700;
     text-transform:uppercase;
     letter-spacing:0.02em;
-    max-width:80px;
+    max-width:78px;
     line-height:1.15;
   }
   .store-row{
     display:flex;
     flex-wrap:wrap;
     align-items:center;
-    gap:28px;
+    gap:22px;
   }
   .store-row img{
-    max-height:52px;
-    max-width:150px;
+    max-height:48px;
+    max-width:140px;
     object-fit:contain;
   }
 
   footer{
     background:var(--ink);
     color:rgba(255,255,255,0.7);
-    padding:28px 24px;
+    padding:26px 24px;
     font-size:12.5px;
     line-height:1.6;
     text-align:center;
@@ -186,8 +190,8 @@
 <body>
 
 <header class="hero">
-  <img src="hero_super_banner.jpg" alt="Resolvé el súper en cuotas sin interés" class="hero-banner">
-
+  <!-- Usá banner_top.png o el banner de la provincia que quieras -->
+  <img src="banner_top.png" alt="Llená el carrito · Comprá hoy y pagá en Noviembre" class="hero-banner">
   <div class="selector-wrap">
     <div class="selector-label">Elegí tu localidad</div>
     <div class="prov-tabs" id="provTabs"></div>
@@ -208,106 +212,46 @@
 </footer>
 
 <script>
+/* ============================================================
+   LOGOS – después reemplazá por los archivos reales que tengas
+   ============================================================ */
 const LOGOS = {
-  changomas:  "tuc_changomas.png",
-  anonima:    "tuc_anonima.png",
-  carrefour:  "tuc_carrefour.png",
-  gomezpardo: "tuc_gomezpardo.png",
-  sanramon:   "tuc_sanramon.png",
-  yaguar:     "jujuy_yaguar.png",
-  churo:      "sanp_churo.png",
-  obrero:     "sanp_obrero.png",
-  vea:        "vea.png"
+  marques:    "logo_el_marques.png",
+  changomas:  "logo_changomas.png",
+  anonima:    "logo_la_anonima.png",
+  carrefour:  "logo_carrefour.png",
+  sanramon:   "logo_san_ramon.png",
+  vea:        "logo_vea.png",
+  jumbo:      "logo_jumbo.png",
+  gomezpardo: "logo_gomez_pardo.png",
+  yaguar:     "logo_yaguar.png",
+  churo:      "logo_el_churo.png",
+  obrero:     "logo_el_obrero.png",
+  comodin:    "logo_comodin.png",
+  nataly:     "logo_super_nataly.png",
+  mariano:    "logo_mariano_max.png",
 };
 
+/* ============================================================
+   DATA real según las imágenes de cada provincia
+   ============================================================ */
 const DATA = {
-  CONC: {
-    name: "Concepción",
-    groups: [
-      { cuotas: "4", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.changomas, alt: "ChangoMas" }
-      ]},
-      { cuotas: "3", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.gomezpardo, alt: "Gómez Pardo" },
-        { logo: LOGOS.vea, alt: "Vea" }
-      ]}
-    ]
-  },
   TUC: {
     name: "Tucumán",
     groups: [
+      { cuotas: "5", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.marques, alt: "Supermercado El Marques" }
+      ]},
       { cuotas: "4", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.anonima, alt: "La Anónima" },
-        { logo: LOGOS.changomas, alt: "ChangoMas" },
+        { logo: LOGOS.changomas, alt: "ChangoMás" },
+        { logo: LOGOS.anonima,   alt: "La Anónima" },
+        { logo: LOGOS.sanramon,  alt: "San Ramón" },
         { logo: LOGOS.carrefour, alt: "Carrefour" }
       ]},
       { cuotas: "3", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.gomezpardo, alt: "Gómez Pardo" },
-        { logo: LOGOS.sanramon, alt: "San Ramón" },
-        { logo: LOGOS.vea, alt: "Vea" }
-      ]}
-    ]
-  },
-  JUJ: {
-    name: "Jujuy",
-    groups: [
-      { cuotas: "4", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.carrefour, alt: "Carrefour" },
-        { logo: LOGOS.yaguar, alt: "Mayorista Yaguar" },
-        { logo: LOGOS.changomas, alt: "ChangoMas" }
-      ]},
-      { cuotas: "3", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.vea, alt: "Vea" }
-      ]}
-    ]
-  },
-  SANP: {
-    name: "San Pedro de Jujuy",
-    groups: [
-      { cuotas: "4", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.churo, alt: "Supermercados El Churo" }
-      ]},
-      { cuotas: "3", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.obrero, alt: "Supermercado El Obrero" },
-        { logo: LOGOS.vea, alt: "Vea" }
-      ]}
-    ]
-  },
-  SGO: {
-    name: "Santiago del Estero",
-    groups: [
-      { cuotas: "4", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.anonima, alt: "La Anónima" },
-        { logo: LOGOS.changomas, alt: "ChangoMas" },
-        { logo: LOGOS.carrefour, alt: "Carrefour" }
-      ]},
-      { cuotas: "3", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.vea, alt: "Vea" }
-      ]}
-    ]
-  },
-  SAL: {
-    name: "Salta",
-    groups: [
-      { cuotas: "4", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.anonima, alt: "La Anónima" },
-        { logo: LOGOS.changomas, alt: "ChangoMas" },
-        { logo: LOGOS.carrefour, alt: "Carrefour" }
-      ]},
-      { cuotas: "3", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.vea, alt: "Vea" }
-      ]}
-    ]
-  },
-  ORAN: {
-    name: "Orán",
-    groups: [
-      { cuotas: "4", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.anonima, alt: "La Anónima" },
-        { logo: LOGOS.changomas, alt: "ChangoMas" }
-      ]},
-      { cuotas: "3", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.vea, alt: "Vea" }
+        { logo: LOGOS.vea,        alt: "Vea" },
+        { logo: LOGOS.jumbo,      alt: "Jumbo" },
+        { logo: LOGOS.gomezpardo, alt: "Gómez Pardo" }
       ]}
     ]
   },
@@ -315,21 +259,105 @@ const DATA = {
     name: "Córdoba",
     groups: [
       { cuotas: "4", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.anonima, alt: "La Anónima" },
-        { logo: LOGOS.changomas, alt: "ChangoMas" },
+        { logo: LOGOS.changomas, alt: "ChangoMás" },
+        { logo: LOGOS.carrefour, alt: "Carrefour" },
+        { logo: LOGOS.anonima,   alt: "La Anónima" }
+      ]},
+      { cuotas: "3", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.vea,     alt: "Vea" },
+        { logo: LOGOS.jumbo,   alt: "Jumbo" },
+        { logo: LOGOS.mariano, alt: "Mariano Max" }
+      ]}
+    ]
+  },
+  SGO: {
+    name: "Santiago del Estero",
+    groups: [
+      { cuotas: "4", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.changomas, alt: "ChangoMás" },
+        { logo: LOGOS.carrefour, alt: "Carrefour" },
+        { logo: LOGOS.anonima,   alt: "La Anónima" }
+      ]},
+      { cuotas: "3", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.vea,    alt: "Vea" },
+        { logo: LOGOS.nataly, alt: "Super Nataly" }
+      ]}
+    ]
+  },
+  SANP: {
+    name: "San Pedro de Jujuy",
+    groups: [
+      { cuotas: "4", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.changomas, alt: "ChangoMás" },
+        { logo: LOGOS.churo,     alt: "Supermercados El Churo" }
+      ]},
+      { cuotas: "3", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.obrero,  alt: "Supermercado El Obrero" },
+        { logo: LOGOS.comodin, alt: "Comodín" }
+      ]}
+    ]
+  },
+  ORAN: {
+    name: "Orán",
+    groups: [
+      { cuotas: "4", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.changomas, alt: "ChangoMás" }
+      ]},
+      { cuotas: "3", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.comodin, alt: "Comodín" },
+        { logo: LOGOS.vea,     alt: "Vea" }
+      ]}
+    ]
+  },
+  JUJ: {
+    name: "Jujuy",
+    groups: [
+      { cuotas: "4", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.changomas, alt: "ChangoMás" },
+        { logo: LOGOS.yaguar,    alt: "Mayorista Yaguar" },
         { logo: LOGOS.carrefour, alt: "Carrefour" }
       ]},
       { cuotas: "3", label: "cuotas sin interés", stores: [
-        { logo: LOGOS.vea, alt: "Vea" }
+        { logo: LOGOS.comodin, alt: "Comodín" },
+        { logo: LOGOS.vea,     alt: "Vea" }
+      ]}
+    ]
+  },
+  SAL: {
+    name: "Salta",
+    groups: [
+      { cuotas: "4", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.anonima,   alt: "La Anónima" },
+        { logo: LOGOS.changomas, alt: "ChangoMás" },
+        { logo: LOGOS.carrefour, alt: "Carrefour" },
+        { logo: LOGOS.yaguar,    alt: "Mayorista Yaguar" }
+      ]},
+      { cuotas: "3", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.vea,   alt: "Vea" },
+        { logo: LOGOS.jumbo, alt: "Jumbo" }
+      ]}
+    ]
+  },
+  CONC: {
+    name: "Concepción",
+    groups: [
+      { cuotas: "4", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.changomas, alt: "ChangoMás" }
+      ]},
+      { cuotas: "3", label: "cuotas sin interés", stores: [
+        { logo: LOGOS.gomezpardo, alt: "Gómez Pardo" }
       ]}
     ]
   }
 };
 
-const tabsEl = document.getElementById('provTabs');
-const gridEl = document.getElementById('promoGrid');
+/* ============================================================
+   RENDER
+   ============================================================ */
+const tabsEl  = document.getElementById('provTabs');
+const gridEl  = document.getElementById('promoGrid');
 const titleEl = document.getElementById('provTitle');
-const subEl = document.getElementById('provSub');
+const subEl   = document.getElementById('provSub');
 
 function render(key){
   const loc = DATA[key];
@@ -344,7 +372,10 @@ function render(key){
     card.className = 'promo-card';
     const storesHtml = g.stores.map(s => `<img src="${s.logo}" alt="${s.alt}">`).join('');
     card.innerHTML = `
-      <span class="cuotas-flag"><span class="num">${g.cuotas}</span><span class="txt">${g.label}</span></span>
+      <span class="cuotas-flag">
+        <span class="num">${g.cuotas}</span>
+        <span class="txt">${g.label}</span>
+      </span>
       <div class="store-row">${storesHtml}</div>
     `;
     gridEl.appendChild(card);
@@ -353,10 +384,10 @@ function render(key){
   document.querySelectorAll('.prov-tab').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.key === key);
   });
-
   history.replaceState(null, '', '#' + key.toLowerCase());
 }
 
+/* Tabs */
 Object.keys(DATA).forEach(key => {
   const btn = document.createElement('button');
   btn.className = 'prov-tab';
@@ -367,16 +398,10 @@ Object.keys(DATA).forEach(key => {
   tabsEl.appendChild(btn);
 });
 
+/* Inicio */
 const hashKey = location.hash.replace('#','').toUpperCase();
-render(DATA[hashKey] ? hashKey : 'CONC');
+render(DATA[hashKey] ? hashKey : 'TUC');
 </script>
 
-  <!-- Cloudflare Web Analytics -->
-  <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e4bff5fb0b1c42b996c14cf19bf481b9"}'></script>
-  <!-- End Cloudflare Web Analytics -->
-
-</body>
-</html>
-  
 </body>
 </html>
