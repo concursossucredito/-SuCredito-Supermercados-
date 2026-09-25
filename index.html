@@ -31,7 +31,7 @@
     letter-spacing:-0.01em;
   }
 
-  /* ---------- HERO (más chico) ---------- */
+  /* ---------- HERO ---------- */
   .hero{
     background: var(--paper);
     position:relative;
@@ -39,12 +39,12 @@
   .hero-banner{
     display:block;
     width:100%;
-    max-height: 200px;          /* ← más chico */
+    max-height: 340px;
     object-fit: cover;
-    object-position: center top;
+    object-position: center 10%;
   }
   @media (max-width:600px){
-    .hero-banner{ max-height: 200px; }
+    .hero-banner{ max-height: 220px; }
   }
 
   /* ---------- LOCATION SELECTOR ---------- */
@@ -164,19 +164,15 @@
     display:flex;
     flex-wrap:wrap;
     align-items:center;
-    gap:22px;
+    gap:18px;
   }
- .store-row img{
-  max-height: 68px !important;
-  max-width: 180px !important;
-  height: auto;
-  width: auto;
-  object-fit: contain;
-  background-color: #ffffff !important;
-  padding: 10px 12px;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-}
+  .store-row img{
+    max-height: 64px;
+    max-width: 170px;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+  }
 
   footer{
     background:var(--ink);
@@ -187,7 +183,6 @@
     text-align:center;
   }
   footer strong{color:#fff;}
-
   @media (max-width:600px){
     .promo-grid{grid-template-columns:1fr;}
   }
@@ -196,8 +191,7 @@
 <body>
 
 <header class="hero">
-  <!-- Usá banner_top.png o el banner de la provincia que quieras -->
-  <img src="banner_top.png" alt="Llená el carrito · Comprá hoy y pagá en Noviembre" class="hero-banner">
+  <img src="hero_banner.png" alt="Llená el carrito · Comprá hoy y pagá en Noviembre" class="hero-banner">
   <div class="selector-wrap">
     <div class="selector-label">Elegí tu localidad</div>
     <div class="prov-tabs" id="provTabs"></div>
@@ -218,9 +212,6 @@
 </footer>
 
 <script>
-/* ============================================================
-   LOGOS – después reemplazá por los archivos reales que tengas
-   ============================================================ */
 const LOGOS = {
   marques:    "logo_el_marques.png",
   changomas:  "logo_changomas.png",
@@ -238,9 +229,6 @@ const LOGOS = {
   mariano:    "logo_mariano_max.png",
 };
 
-/* ============================================================
-   DATA real según las imágenes de cada provincia
-   ============================================================ */
 const DATA = {
   TUC: {
     name: "Tucumán",
@@ -357,9 +345,6 @@ const DATA = {
   }
 };
 
-/* ============================================================
-   RENDER
-   ============================================================ */
 const tabsEl  = document.getElementById('provTabs');
 const gridEl  = document.getElementById('promoGrid');
 const titleEl = document.getElementById('provTitle');
@@ -368,10 +353,8 @@ const subEl   = document.getElementById('provSub');
 function render(key){
   const loc = DATA[key];
   const totalStores = loc.groups.reduce((sum, g) => sum + g.stores.length, 0);
-
   titleEl.textContent = loc.name;
   subEl.textContent = totalStores + (totalStores === 1 ? " supermercado adherido" : " supermercados adheridos");
-
   gridEl.innerHTML = '';
   loc.groups.forEach(g => {
     const card = document.createElement('div');
@@ -386,14 +369,12 @@ function render(key){
     `;
     gridEl.appendChild(card);
   });
-
   document.querySelectorAll('.prov-tab').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.key === key);
   });
   history.replaceState(null, '', '#' + key.toLowerCase());
 }
 
-/* Tabs */
 Object.keys(DATA).forEach(key => {
   const btn = document.createElement('button');
   btn.className = 'prov-tab';
@@ -404,10 +385,8 @@ Object.keys(DATA).forEach(key => {
   tabsEl.appendChild(btn);
 });
 
-/* Inicio */
 const hashKey = location.hash.replace('#','').toUpperCase();
 render(DATA[hashKey] ? hashKey : 'TUC');
 </script>
-
 </body>
 </html>
