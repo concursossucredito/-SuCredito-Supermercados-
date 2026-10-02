@@ -100,7 +100,7 @@
   main{
     max-width:1080px;
     margin:0 auto;
-    padding: 22px 24px 90px;
+    padding: 28px 24px 90px;
   }
   .province-heading{
     display:flex;
@@ -109,7 +109,7 @@
     margin: 14px 0 4px;
   }
   .province-heading h2{
-    font-size:clamp(1.55rem,4vw,2.15rem);
+    font-size:clamp(2rem,4vw,3rem);
     margin:0;
   }
   .province-heading .sub{
@@ -118,75 +118,155 @@
   }
   .promo-grid{
     display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap:16px;
-    margin-top:22px;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:24px;
+    margin-top:26px;
   }
+
   .promo-card{
     border:1px solid var(--line);
-    border-radius:16px;
+    border-radius:18px;
     background:#fff;
-    padding:22px 20px;
+    padding:0 14px 22px;
+    min-height:330px;
     display:flex;
     flex-direction:column;
-    gap:16px;
+    gap:18px;
     position:relative;
     overflow:hidden;
   }
+
   .promo-card::before{
     content:"";
     position:absolute;
-    left:0; top:0;
-    width:6px; height:100%;
+    left:0;
+    top:0;
+    width:7px;
+    height:100%;
     background:var(--yellow);
   }
+
+  /* Encabezado de cuotas: amarillo + número rojo + tipografía negra pesada */
   .cuotas-flag{
-    display:inline-flex;
+    display:flex;
     align-items:center;
-    gap:10px;
+    gap:14px;
     align-self:flex-start;
+    width:calc(100% + 14px);
+    min-height:116px;
     background:var(--yellow);
     color:var(--ink);
-    padding:9px 15px 9px 13px;
-    border-radius:0 10px 10px 0;
-    margin-left:-20px;
+    padding:16px 22px 16px 26px;
+    margin-left:-14px;
+    border-radius:0 0 58px 0;
+    position:relative;
   }
+
   .cuotas-flag .num{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:0 0 72px;
+    width:72px;
+    height:72px;
+    border-radius:14px;
+    background:var(--red);
+    color:#fff;
     font-family:'Archivo Black',sans-serif;
-    font-size:1.5rem;
+    font-size:3.1rem;
     line-height:1;
   }
+
   .cuotas-flag .txt{
-    font-size:12px;
-    font-weight:700;
+    font-family:'Archivo Black','Inter',sans-serif;
+    font-size:20px;
+    font-weight:400;
     text-transform:uppercase;
-    letter-spacing:0.02em;
-    max-width:78px;
-    line-height:1.15;
+    letter-spacing:-0.02em;
+    max-width:190px;
+    line-height:1.02;
   }
+
   .store-row{
     display:flex;
     flex-wrap:wrap;
-    align-items:center;
+    align-items:stretch;
+    justify-content:center;
     gap:12px;
+    flex:1;
+    padding:2px 2px 0 8px;
   }
+
   .store-logo{
     display:flex;
     align-items:center;
     justify-content:center;
+    flex:1 1 145px;
+    min-width:120px;
+    min-height:104px;
     background:#fff;
     border:1px solid var(--line);
-    border-radius:10px;
-    padding:10px 14px;
-    height:64px;
+    border-radius:12px;
+    padding:14px 18px;
   }
+
   .store-logo img{
-    max-height: 42px;
-    max-width: 140px;
-    height: auto;
-    width: auto;
-    object-fit: contain;
+    max-height:76px;
+    max-width:190px;
+    height:auto;
+    width:auto;
+    object-fit:contain;
     display:block;
+  }
+
+  .store-row:has(.store-logo:only-child) .store-logo{
+    flex-basis:100%;
+    min-height:150px;
+  }
+
+  .store-row:has(.store-logo:only-child) .store-logo img{
+    max-height:105px;
+    max-width:360px;
+  }
+
+  @media (max-width:900px){
+    .promo-grid{
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+  }
+
+  @media (max-width:600px){
+    .promo-grid{
+      grid-template-columns:1fr;
+    }
+
+    .promo-card{
+      min-height:0;
+    }
+
+    .cuotas-flag{
+      min-height:100px;
+    }
+
+    .cuotas-flag .num{
+      flex-basis:62px;
+      width:62px;
+      height:62px;
+      font-size:2.7rem;
+    }
+
+    .cuotas-flag .txt{
+      font-size:18px;
+    }
+
+    .store-logo{
+      min-height:96px;
+    }
+
+    .store-logo img{
+      max-height:70px;
+      max-width:180px;
+    }
   }
 
   footer{
