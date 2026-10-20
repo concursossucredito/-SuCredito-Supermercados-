@@ -17,6 +17,7 @@
     --ink-soft: #4A4850;
     --paper: #FFFDF6;
     --line: rgba(27,26,30,0.12);
+    --topbar-h: 70px;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -32,10 +33,48 @@
     letter-spacing:-0.01em;
   }
 
+  /* ---------- INTRO + TOPBAR ---------- */
+  .intro-fondo{
+    position:fixed;inset:0;z-index:90;
+    background:var(--yellow);
+    pointer-events:none;
+    animation:salidaFondo 1.6s ease forwards;
+  }
+  @keyframes salidaFondo{
+    0%, 55%{ opacity:1; }
+    100%{ opacity:0; visibility:hidden; }
+  }
+
+  .topbar{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:#fff;
+    border-bottom:6px solid var(--yellow);
+    padding:12px 24px;
+    display:flex;justify-content:center;align-items:center;
+    min-height:var(--topbar-h);
+  }
+  .topbar img{
+    display:block;height:46px;width:auto;max-width:80%;
+    transform-origin:center center;
+    animation:logoDesdeCentro 1.6s cubic-bezier(.22,.8,.28,1) both;
+    will-change:transform, opacity;
+  }
+  @keyframes logoDesdeCentro{
+    0%{ opacity:1; transform: translateY(38vh) scale(2.35); }
+    50%{ opacity:1; transform: translateY(0) scale(1.08); }
+    72%{ transform: translateY(0) scale(0.96); }
+    100%{ opacity:1; transform: translateY(0) scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .topbar img{ animation:none; opacity:1; transform:none; will-change:auto; }
+    .intro-fondo{ display:none; }
+  }
+
   /* ---------- HERO ---------- */
   .hero{
     background: var(--paper);
     position:relative;
+    margin-top: var(--topbar-h);
   }
   .hero-banner{
     display:block;
@@ -147,7 +186,6 @@
     background:var(--yellow);
   }
 
-  /* Encabezado de cuotas: amarillo + número rojo + tipografía negra pesada */
   .cuotas-flag{
     display:flex;
     align-items:center;
@@ -237,6 +275,10 @@
   }
 
   @media (max-width:600px){
+    :root{ --topbar-h: 56px; }
+    .topbar{ padding:8px 16px; }
+    .topbar img{ height:34px; }
+
     .promo-grid{
       grid-template-columns:1fr;
     }
@@ -279,15 +321,18 @@
     text-align:center;
   }
   footer strong{color:#fff;}
-  @media (max-width:600px){
-    .promo-grid{grid-template-columns:1fr;}
-  }
 </style>
 </head>
 <body>
 
+<div class="intro-fondo" aria-hidden="true"></div>
+
+<header class="topbar" id="topbar">
+  <img src="logo.png" alt="Tarjeta Sucrédito" id="logo">
+</header>
+
 <header class="hero">
-  <img src="hero_super_9-10.png" alt="Llená el carrito · Comprá hoy y pagá en Noviembre" class="hero-banner">
+  <img src="¡No te olvides del súper!.png" alt="Llená el carrito · No te olvides del Super esta Semana" class="hero-banner">
   <div class="selector-wrap">
     <div class="selector-label">Elegí tu localidad</div>
     <div class="prov-tabs" id="provTabs"></div>
@@ -483,12 +528,30 @@ Object.keys(DATA).forEach(key => {
 
 const hashKey = location.hash.replace('#','').toUpperCase();
 render(DATA[hashKey] ? hashKey : 'TUC');
+
+/* Ajuste dinámico de altura del topbar */
+function updateTopbarHeight(){
+  const topbar = document.getElementById('topbar');
+  if(!topbar) return;
+  document.documentElement.style.setProperty('--topbar-h', topbar.offsetHeight + 'px');
+}
+const logo = document.getElementById('logo');
+if(logo){
+  if(logo.complete) updateTopbarHeight();
+  else {
+    logo.addEventListener('load', updateTopbarHeight);
+    logo.addEventListener('error', updateTopbarHeight);
+  }
+}
+window.addEventListener('resize', updateTopbarHeight);
+window.addEventListener('load', updateTopbarHeight);
+setTimeout(updateTopbarHeight, 200);
+setTimeout(updateTopbarHeight, 800);
 </script>
 
-  <!-- Cloudflare Web Analytics -->
+<!-- Cloudflare Web Analytics -->
 <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e4bff5fb0b1c42b996c14cf19bf481b9"}'></script>
 <!-- End Cloudflare Web Analytics -->
 
-  
 </body>
 </html>
